@@ -1,11 +1,14 @@
-# WHISKER PLOT 2 dirs
+# WHISKER PLOT --> Mouse and Human Monomers & Homotrimers
 import statistics
 from matplotlib import pyplot as plt
 import numpy as np
 import os
 import pandas as pd
-max_val2 = []
-max_val = []
+models = # dir to human subdirs AF2 outputs
+models2 = # dir to mouse subdirs AF2 outputs
+
+max_val2 = [] # highest pTM-score of all monomers/homotrimers for models1
+max_val = [] # highest pTM-score of all monomers/homotrimers for models2
 def score(models,models2):
     dict1={}
     dict2={}
@@ -13,7 +16,7 @@ def score(models,models2):
         d = os.path.join(models, dir1)
         if os.path.isdir(d):
             for file in os.listdir(d):
-                if file.endswith('ranking_debug.json'):
+                if file.endswith('ranking_debug.json'): # ranked pTM-scores
                     ls = []
                     fo = models+file
                     fo = open(models+dir1+'/'+file)
@@ -45,11 +48,9 @@ def score(models,models2):
                                     ls2.append(e)
                     std_ls1 = sorted(ls2) # sorted list of lddt scores only
                     f = max(ls2) #highest model score of a json file
-                    min1 = min(ls2)
-                    diff1 = float(f)-float(min1)
                     median1 = statistics.median(std_ls1)
-                    print(d,median1,' = median1')
-                    print(d,f, ' = max1')
+                    print(d,median1,' = median1') # highest median pTM-score of model
+                    print(d,f, ' = max1') # highest pTM-score of model
                     max_val.append([float(f),d])
 
                     ls3 = []
@@ -72,7 +73,6 @@ def score(models,models2):
     for dir2 in os.listdir(models2):
         d2 = os.path.join(models2, dir2)
         if os.path.isdir(d2):
-            #print(d2,'models2')
             for file in os.listdir(d2):
                 if file.endswith('ranking_debug.json'):
                     ls4 = []
@@ -105,8 +105,6 @@ def score(models,models2):
                                     ls5.append(e)
                                 
                     max2 = max(ls5)
-                    min2 = min(ls5)
-                    diff2 = float(max2)-float(min2)
                     std_ls = sorted(ls5) # sorted list of lddt scores only
                     median2 = statistics.median(std_ls)
                     print(d2,median2, ' = median2')
@@ -135,7 +133,8 @@ def score(models,models2):
     dict1 = sorted(dict1.items(),key=lambda x: x[0][-1],reverse=True) # order according to last str element in key
     dict1 = dict(dict1)
     plt.rcParams["figure.figsize"] = (20, 10)
-    labels, data = dict1.keys(), dict1.values()
+    labels = dict1.keys(),
+    data = dict1.values()
     plt.boxplot(data,whis=100,vert=False)
     plt.yticks(range(1, len(labels) + 1), labels)
     if 'monomer' in models: 
