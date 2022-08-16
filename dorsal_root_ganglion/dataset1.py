@@ -5,7 +5,6 @@ wget "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE63576&format=file&file=G
 #fo = open('dir/to/csv/file)
 
 # counts' in FPKM
-
 fo = fo.readlines()
 ls = []
 for i in fo:
