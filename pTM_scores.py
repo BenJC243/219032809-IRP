@@ -133,7 +133,7 @@ def score(models,models2):
     dict1 = sorted(dict1.items(),key=lambda x: x[0][-1],reverse=True) # order according to last str element in key
     dict1 = dict(dict1)
     plt.rcParams["figure.figsize"] = (20, 10)
-    labels = dict1.keys(),
+    labels = dict1.keys()
     data = dict1.values()
     plt.boxplot(data,whis=100,vert=False)
     plt.yticks(range(1, len(labels) + 1), labels)
